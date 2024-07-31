@@ -10,8 +10,8 @@ exports.usersCreateGet = asyncHandler(async (req, res) => {
 });
 
 exports.usersCreatePost = asyncHandler(async (req, res) => {
-  const { firstName, lastName } = req.body;
-  usersStorage.addUser({ firstName, lastName });
+  const { firstName, lastName, email, age, bio } = req.body;
+  usersStorage.addUser({ firstName, lastName, email, age, bio });
   res.redirect("/");
 });
 
@@ -19,6 +19,10 @@ const { body, validationResult } = require("express-validator");
 
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters.";
+const syntaxErr = "must have a correct syntax";
+const numericErr = "must be a number";
+const ageValuesErr = "must be between 18 and 120";
+const bioLengthErr = "max length is 200 characters";
 
 const validateUser = [
   body("firstName")
@@ -33,6 +37,13 @@ const validateUser = [
     .withMessage(`Last name ${alphaErr}`)
     .isLength({ min: 1, max: 10 })
     .withMessage(`Last name ${lengthErr}`),
+  body("email").isEmail().withMessage(`Email adress ${syntaxErr}`),
+  body("age")
+    .isNumeric()
+    .withMessage(`Age ${numericErr}`)
+    .isNumeric({ min: 18, max: 120 })
+    .withMessage(`Age ${ageValuesErr}`),
+  body("bio").isLength({ max: 200 }).withMessage(`Bio ${bioLengthErr}`),
 ];
 
 // We can pass an entire array of middleware validations to our controller.
@@ -46,8 +57,8 @@ exports.usersCreatePost = [
         errors: errors.array(),
       });
     }
-    const { firstName, lastName } = req.body;
-    usersStorage.addUser({ firstName, lastName });
+    const { firstName, lastName, email, age, bio } = req.body;
+    usersStorage.addUser({ firstName, lastName, email, age, bio });
     res.redirect("/");
   }),
 ];
@@ -69,7 +80,13 @@ exports.usersUpdatePost = [
       });
     }
     const { firstName, lastName } = req.body;
-    usersStorage.updateUser(req.params.id, { firstName, lastName });
+    usersStorage.updateUser(req.params.id, {
+      firstName,
+      lastName,
+      email,
+      age,
+      bio,
+    });
     res.redirect("/");
   }),
 ];
