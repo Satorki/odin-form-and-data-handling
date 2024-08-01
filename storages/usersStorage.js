@@ -27,6 +27,10 @@ class UsersStorage {
   deleteUser(id) {
     delete this.storage[id];
   }
+  
+  findUsers({name, email}) {
+    return this.storage[name]
+  }
 }
 // Rather than exporting the class, we can export an instance of the class by instantiating it.
 // This ensures only one instance of this class can exist, also known as the "singleton" pattern.

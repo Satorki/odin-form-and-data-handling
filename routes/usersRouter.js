@@ -3,6 +3,8 @@ const { Router } = require("express");
 const usersController = require("../controllers/usersController");
 const usersRouter = Router();
 
+usersRouter.get("/search", usersController.usersSearchGet);
+usersRouter.post("/search", usersController.usersSearchPost);
 usersRouter.get("/create", usersController.usersCreateGet);
 usersRouter.post("/create", usersController.usersCreatePost);
 usersRouter.get("/:id/update", usersController.usersUpdateGet);

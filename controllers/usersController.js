@@ -93,3 +93,16 @@ exports.usersDeletePost = asyncHandler(async (req, res) => {
   usersStorage.deleteUser(req.params.id);
   res.redirect("/");
 });
+
+exports.usersSearchGet = asyncHandler(async (req, res) => {
+  res.render("search", {
+    title: "User Search",
+    users: usersStorage.getUsers(),
+  });
+});
+
+exports.usersSearchPost = asyncHandler(async (req, res) => {
+  const searchQuery = req.body;
+  const users = usersStorage.findUsers();
+  res.redirect("/");
+});

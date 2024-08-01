@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title%></h1>
+    <form action="/search" method="get">
+      <label for="nameSearch">Name: </label>
+      <input type="text" name="nameSearch" id="nameSearch" />
+      <label for="emailSearch">Email: </label>
+      <input type="text" name="emailSearch" id="emailSearch" />
+      <button type="submit">Search</button>
+    </form>
+    <a href="/">Back to Home</a>
+  </body>
+</html>
