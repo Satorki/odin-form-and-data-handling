@@ -38,11 +38,7 @@ const validateUser = [
     .isLength({ min: 1, max: 10 })
     .withMessage(`Last name ${lengthErr}`),
   body("email").isEmail().withMessage(`Email adress ${syntaxErr}`),
-  body("age")
-    .isNumeric()
-    .withMessage(`Age ${numericErr}`)
-    .isNumeric({ min: 18, max: 120 })
-    .withMessage(`Age ${ageValuesErr}`),
+  body("age").isInt({ min: 18, max: 120 }).withMessage(`Age ${ageValuesErr}`),
   body("bio").isLength({ max: 200 }).withMessage(`Bio ${bioLengthErr}`),
 ];
 
