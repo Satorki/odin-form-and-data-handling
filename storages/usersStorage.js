@@ -27,9 +27,14 @@ class UsersStorage {
   deleteUser(id) {
     delete this.storage[id];
   }
-  
-  findUsers({name, email}) {
-    return this.storage[name]
+
+  findUsers({ name, email }) {
+    return Object.values(this.storage).filter(
+      (user) =>
+        (name &&
+          (user.firstName.includes(name) || user.lastName.includes(name))) ||
+        (email && user.email.includes(email))
+    );
   }
 }
 // Rather than exporting the class, we can export an instance of the class by instantiating it.

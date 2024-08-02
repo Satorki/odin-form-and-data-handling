@@ -1,11 +1,13 @@
 // controllers/usersController.js
 const asyncHandler = require("express-async-handler");
-const usersStorage = require("../storages/usersStorage");
+//const usersStorage = require("../storages/usersStorage");
+const db = require("../db/queries");
 
 exports.usersCreateGet = asyncHandler(async (req, res) => {
   res.render("users", {
     title: "User List",
-    users: usersStorage.getUsers(),
+    users: db.getAllUsernames(),
+    // users: usersStorage.getUsers(),
   });
 });
 
@@ -97,12 +99,18 @@ exports.usersDeletePost = asyncHandler(async (req, res) => {
 exports.usersSearchGet = asyncHandler(async (req, res) => {
   res.render("search", {
     title: "User Search",
-    users: usersStorage.getUsers(),
+    users: [],
   });
 });
 
 exports.usersSearchPost = asyncHandler(async (req, res) => {
-  const searchQuery = req.body;
-  const users = usersStorage.findUsers();
-  res.redirect("/");
+  const { nameSearch, emailSearch } = req.body;
+  const users = usersStorage.findUsers({
+    name: nameSearch,
+    email: emailSearch,
+  });
+  res.render("search", {
+    title: "User Search",
+    users,
+  });
 });
